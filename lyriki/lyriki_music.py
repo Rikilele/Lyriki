@@ -45,17 +45,17 @@ def compatibleNotesToChord(key, chord):
 
 # helper function
 def nearestTo(number, listOfNum):
-    count = 1000
+    closestCount = 1000
     closest = None
     for i in listOfNum:
-        if abs(number-i) < count:
-            count = abs(number-i)
+        if abs(number-i) < closestCount:
+            closestCount = abs(number-i)
             closest = i
     return closest
 
 def generateNextNote(prevNote, chord, key):
     noteList = compatibleNotesToChord(key, chord)
-    prevNote += random.triangular(-9, 9, 0)
+    prevNote += random.triangular(-10, 10, 0)
     newNote = nearestTo(prevNote, noteList)
     return newNote
 
