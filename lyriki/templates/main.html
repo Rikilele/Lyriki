@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Lyriki</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/main.css" type="text/css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <style>
+    .jumbotron { 
+        background-color: #ff9933; /* Orange */
+        color: #ffffff;
+        opacity: 0.7;
+        margin: auto;
+    }
+    .pic{
+    background-image: url(../static/photos/guitar.jpg);
+    z-index: -1;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-size: cover;
+    opacity: 0.8;
+    }
+    .content {
+      width: 70%;
+      max-width: 1750px;
+      height: 60%;
+      max-height: 500px;
+      min-height: 200px;
+      margin: auto;
+      padding: 50px;
+      background-color: white;
+      opacity: 0.65;
+
+    }
+    .btn {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #f1f1f1;
+    border-radius: 0;
+    transition: .2s;
+    }
+
+/* On hover, the color of .btn will transition to white with black text */
+    .btn:hover, .btn:focus {
+    border: 1px solid #333;
+    background-color: #fff;
+    color: #000;
+    }
+
+    .modal-header, h4, .close {
+    background-color: #333;
+    color: #fff !important;
+    text-align: center;
+    font-size: 30px;
+    }
+
+    .modal-header, .modal-body {
+    padding: 40px 50px;
+    }
+    
+    #key_container {
+    margin: auto;
+    }
+
+    .settings {
+    list-style-type:none;
+    margin:25px 0 0 0;
+    padding:0;
+
+    }
+
+    .settings li {
+    float:left;
+    margin-left: 100px;
+    width:100px;
+    height:40px;
+    position:relative;
+    }
+
+    .settings label, .settings input {
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    }
+
+    .settings input[type="radio"] {
+    opacity:0.01;
+    z-index:100;
+    }
+
+    .settings input[type="radio"]:checked + label,
+    .Checked + label {
+    background: black;
+    color: white;
+    }
+
+    .settings label {
+    padding:5px;
+    border:1px solid #CCC; 
+    cursor:pointer;
+    z-index:90;
+    }
+
+    .settings label:hover {
+    background:#DDD;
+    }
+
+    .content1 {
+      width: 70%;
+      max-width: 1750px;
+      height: 60%;
+      max-height: 500px;
+      min-height: 200px;
+      margin: auto;
+      padding: 50px;
+      background-color: #e6e6e6;
+      opacity: 0.90;
+    }
+    </style>
+    <div class="pic"></div>
+    <div class="jumbotron text-center">
+        <h1>Lyriki</h1> 
+        <p><em>Automatically put your lyrics to music!</em></p>
+    </div>
+
+    <div class="text-center content">
+    <h2>Step1:  Choose your mood:</h2>
+    <form action="/get_settings" method="post">
+        <div>
+        <ul class="settings">
+        <li>
+            <input class="settings" type="radio" value="mood1" name="mood" id="mood1"/>
+            <label for="mood1">Passionate</label>
+        </li>
+        <li>
+            <input class="settings" type="radio" value="mood2" name="mood" id="mood2"/>
+            <label for="mood2">Happy</label>
+        </li>
+        <li>
+            <input class="settings" type="radio" value="mood3" name="mood" id="mood3"/>
+            <label for="mood3">Cool</label>
+        </li>
+        </ul>
+        </div>
+
+        <br><br><br>
+        <h2>Step2:  Choose your Key:</h2>
+        <div class="settings" id="key_container">
+        <ul class="settings">
+        <li>
+            <input type="radio" value="C" name="key" id="c"/>
+            <label for="c">C</label>
+        </li>
+        <li>
+            <input type="radio" value="D" name="key" id="d"/>
+            <label for="d">D</label>
+        </li>
+        <li>
+            <input type="radio" value="E" name="key" id="e"/>
+            <label for="e">E</label>
+        </li>
+        <li>
+            <input type="radio" value="F" name="key" id="f"/>
+            <label for="f">F</label>
+        </li>
+        <li>
+            <input type="radio" value="G" name="key" id="g"/>
+            <label for="g">G</label>
+        </li>
+        <li>
+            <input type="radio" value="A" name="key" id="a"/>
+            <label for="a">A</label>
+        </li>
+        <li>
+            <input type="radio" value="B" name="key" id="b"/>
+            <label for="b">B</label>
+        </li>
+        </ul>
+    <br><br>
+    <br><br>
+    </div>
+
+    <div class=" text-center">
+    <p></p>
+        <h2>Step3:  Enter your Lyrics:</h2>
+        <input type="text" class="form-control" size="50" name="lyrics" id="lyrics" line="30" placeholder="Your lyrics here"/>
+        <p><STRONG>(For optimal performance, use '/' to change line)</STRONG></p>
+    </div> 
+    <input type="submit" value="Make a Song!" z-index=1>
+
+    </form>
+    </div>
+
+    <div class="container-fluid text-center content">
+    <h2>Not the perfect Key?</h2>
+    <button class="btn"><strong>-</strong></button> 
+    <button class="btn"><strong>+</strong></button>
+    <button class="btn"><strong>Save & Export</strong></button>
+    </div> 
+
+    <div class="container-fluid text-center content1">
+    <p><strong>Producers:</strong></p> 
+     <div class="row">
+      <div class="col-md-4":before>
+          <p>Taisuke Yasuda</p> 
+          <img src="../static/photos/Tai.jpg" alt="Tai" style="width:150px;height:150px">
+      </div>
+      <div class="col-md-4">
+          <p>Zhen Zhou</p>
+          <img src="../static/photos/Will.jpg" alt="Will" style="width:150px;height:150px">
+      </div>
+      <div class="col-md-4">
+          <p>Riki Singh Khorana</p> 
+          <img src="../static/photos/Riki.JPG" alt="Riki" style="width:150px;height:150px">
+      </div>
+    </div>
+    </div>
+
+    <div class="text-center content">
+    <p><strong>Links:</strong></p>
+        <a href="https://www.cmu.edu">cmu</a>
+        <br><br>
+        <a href="https://github.com">github</a>
+        <br><br>
+        <a href="https://www.facebook.com">facebook</a>
+    </div>
+
+    <div class="text-center content">
+      Copyright 2016.
+      Taisuke Yasuda, Zhen Zhou, Riki Khorana
+    </div>
+
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '474228509428221',
+                xfbml      : true,
+                version    : 'v2.5'
+            });
+        };
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <div
+        class="fb-like"
+        data-share="true"
+        data-width="450"
+        data-show-faces="true">
+    </div>
+
+</body>
+</html>
