@@ -13,7 +13,15 @@ midi = {60:'c',62:'d',64:'e',65:'f',67:'g',69:'a',71:'b'}
 c = [60,64,67]
 f = [60,65,69]
 g = [55,62,65]
+cs = [61,65,68]
+eb = [63,67,70]
+cm = [60,63,67]
+gm = [55,58,62]
+bb = [62,65,70]
+dm = [62,65,69]
 happy1 = [c,c,c,c,f,f,f,f,g,g,g,g,c,c,c,c,f,f,f,f,g,g,g,g,g,g,g,g,c,c,c,c]
+pass1 = [c,c,c,c,cs,cs,cs,cs,c,c,c,c,cs,cs,cs,cs,c,cs,eb,cs,c,cs,c,cs,c,c,c,c,cs,cs,c,cs]
+cool1 = [cm,cm,cm,cm,bb,bb,bb,bb,dm,dm,dm,dm,c,c,c,c,cm,cm,cm,cm,bb,bb,bb,bb,dm,dm,dm,dm,c,c,c,c]
 
 ########################### Next Note ###############################
 
@@ -24,7 +32,7 @@ def chordType(chord):
         return [ -12, -9, -5, 0, 3, 7, 12]
     elif chord == "M7":
         return [ -12, -8, -5, -1, 0, 4, 7, 11, 12]
-    elif chord == "M":
+    else:
         return [ -12, -8, -5, 0, 4, 7, 12]
 
 # helper function
@@ -117,8 +125,12 @@ def play_song():
 def make_song_file(mood,key,syllables):
     # create the MIDIFile object with 1 track
     MyMIDI = MIDIFile(1)
-    syllables = [2,1,2,3,2,1,2,3,1,1,2,2,1,1,1,3,2,1,2,3,2,2,2,2,1,1,1,3,2,1,1,2]
-    mood = happy1
+    if (mood == 'mood1'):
+        mood = pass1
+    elif (mood == 'mood2'):
+        mood = happy1
+    elif (mood == 'mood3'):
+        mood = cool1
 
     # tracks are numbered from zero. times are measured in beats.
 
@@ -145,6 +157,11 @@ def add_chords(MyMIDI,chords,key):
             pitch = note + key
             time = i
             MyMIDI.addNote(TRACK,CHANNEL,pitch,time,DURATION,LOW)
+    chord = chords[1]
+    for note in chord:
+        pitch = note + key
+        time = len(chords)
+        MyMIDI.addNote(TRACK,CHANNEL,pitch,time,10,LOW)
     return MyMIDI
 
 def add_notes(MyMIDI,syllables,key,chords):
@@ -152,7 +169,11 @@ def add_notes(MyMIDI,syllables,key,chords):
     for i in range(len(chords)):
         syllable = syllables[i]
         chord = chords[i]
-        note = generateNextNote(note,'M',key+60)
+        modes = dict()
+        if (tuple(chord) == tuple(cm) or tuple(chord) == tuple(dm) or tuple(chord) == tuple(gm)):
+            note = generateNextNote(note,'m',key+60)
+        else:
+            note = generateNextNote(note,'M',key+60)
         print(note)
         if (syllable != 0):
             duration = 1.0 / syllable    
@@ -162,4 +183,5 @@ def add_notes(MyMIDI,syllables,key,chords):
 
 # s = [2,1,2,3,2,1,2,3,1,1,2,2,1,1,1,3,2,1,2,3,2,2,2,2,1,1,1,3,2,1,1,2]
 # make_song_file(happy1,60,s)
+# play_song()
 # play_song()
